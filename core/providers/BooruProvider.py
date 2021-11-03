@@ -21,7 +21,7 @@ class BooruProvider(ImageProvider):
         req = self.provider_url
 
         # handle tags
-        if self.get_tags() and len(self.get_tags()) > 0:
+        if (self.get_tags() and len(self.get_tags()) > 0) or (self.get_blacklisted_tags() and len(self.get_blacklisted_tags()) > 0):
             req = req + "&tags="
             for tag in self.get_tags():
                 req = req + "+" + tag

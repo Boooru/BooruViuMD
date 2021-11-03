@@ -16,6 +16,7 @@
 
         ImageContainer:
             id: main_image_container
+            orientation: "horizontal"
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
         MDToolbar:
@@ -23,4 +24,5 @@
             title: "BooruViu"
             pos_hint: {"bottom" : 1}
             elevation: 10
-            right_action_items: [["dots-vertical", lambda x: set_screen(root, "root scroll screen")]]
+            left_action_items: [["arrow-left", lambda x: set_screen(root, "root scroll screen")]]
+            right_action_items: [["download", lambda x: x], ["open-in-new", lambda x: x], ["account-search", lambda x: x], ["tag-multiple", lambda x:x]]

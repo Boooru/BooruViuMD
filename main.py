@@ -21,7 +21,7 @@ class BooruApp(MDApp):
         self.provider_manager = ProviderManager()
 
     def build(self):
-        self.theme_cls.primary_palette = "Green"
+        self.theme_cls.primary_palette = "Pink"
         self.theme_cls.theme_style = "Dark"
 
         core.caches.provider_cache['root scroll screen'] = ProviderManager()

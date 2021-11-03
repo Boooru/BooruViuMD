@@ -9,37 +9,26 @@
             size: self.size
             pos: self.pos
 
-    FloatLayout:
-        id: outer_float_layout
+    MDBoxLayout:
+        id: outer_box_layout
+        orientation: "vertical"
+        size_hint: None, None
+        size: (root.size[0], root.size[1])
 
-        BoxLayout:
-            id: outer_box_layout
-            orientation: "vertical"
-            size_hint: None, None
-            size: (root.size[0], root.size[1])
+        TextInput
+            id:tags
+            size_hint: 0.5, None
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, 0.1
+        MDToolbar:
+            id: tool_bar
+            title: "BooruViu"
+            pos_hint: {"top" : 1}
+            elevation: 10
+            right_action_items: [["magnify", lambda x: root.search()],["cog", lambda x: set_screen(root, "provider setup screen")], ["text-long", lambda x:x]]
 
-                Button:
-                    id:search_button
-                    text:"Search"
-                    size_hint: 0.3,None
-                    on_press: root.search()
 
-                TextInput
-                    id:tags
-                    size_hint: 0.5, None
-
-                Button:
-                    id:settings_button
-                    text:"Settings"
-                    size_hint: 0.2, None
-                    on_press: root.parent.current = "provider setup screen"
-
-            ScrollView:
-                id: image_scroll_view
-                do_scroll_x: False
-                do_scroll_y: True
-                always_overscroll: True
+        ScrollView:
+            id: image_scroll_view
+            do_scroll_x: False
+            do_scroll_y: True
+            always_overscroll: True

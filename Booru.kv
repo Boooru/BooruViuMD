@@ -3,14 +3,19 @@
 #:import RootScrollScreen ui.screens.RootScrollScreen
 #:import BigViewScreen ui.screens.BigViewScreen
 
-ScreenManager:
-    transition: FadeTransition()
+MDNavigationLayout:
 
-    ProviderSetupScreen:
-        name: "provider setup screen"
+    ScreenManager:
+        transition: FadeTransition()
 
-    RootScrollScreen:
-        name: "root scroll screen"
+        ProviderSetupScreen:
+            name: "provider setup screen"
 
-    BigViewScreen:
-        name: "big view screen"
+        RootScrollScreen:
+            name: "root scroll screen"
+
+        BigViewScreen:
+            name: "big view screen"
+
+    MDNavigationDrawer:
+        id: nav_drawer
