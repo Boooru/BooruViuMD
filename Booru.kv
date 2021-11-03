@@ -4,8 +4,10 @@
 #:import BigViewScreen ui.screens.BigViewScreen
 
 MDNavigationLayout:
+    id: root_layout
 
     ScreenManager:
+        id: screen_manager
         transition: FadeTransition()
 
         ProviderSetupScreen:
@@ -19,3 +21,4 @@ MDNavigationLayout:
 
     MDNavigationDrawer:
         id: nav_drawer
+        ContentNavigationDrawer:
