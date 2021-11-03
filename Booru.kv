@@ -1,0 +1,12 @@
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import ProviderSetupScreen ui.screens.ProviderSetupScreen
+#:import RootScrollScreen ui.screens.RootScrollScreen
+
+ScreenManager:
+    transition: FadeTransition()
+
+    ProviderSetupScreen:
+        name: "provider setup screen"
+
+    RootScrollScreen:
+        name: "root scroll screen"

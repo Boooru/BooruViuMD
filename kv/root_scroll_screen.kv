@@ -1,0 +1,45 @@
+#: import gch kivy.utils.get_color_from_hex
+
+<RootScrollScreen>
+
+    canvas.before:
+        Color:
+            rgba: gch("#35353f")
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    FloatLayout:
+        id: outer_float_layout
+
+        BoxLayout:
+            id: outer_box_layout
+            orientation: "vertical"
+            size_hint: None, None
+            size: (root.size[0], root.size[1])
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, 0.1
+
+                Button:
+                    id:search_button
+                    text:"Search"
+                    size_hint: 0.3,None
+                    on_press: root.search()
+
+                TextInput
+                    id:tags
+                    size_hint: 0.5, None
+
+                Button:
+                    id:settings_button
+                    text:"Settings"
+                    size_hint: 0.2, None
+                    on_press: root.parent.current = "provider setup screen"
+
+            ScrollView:
+                id: image_scroll_view
+                do_scroll_x: False
+                do_scroll_y: True
+                always_overscroll: True

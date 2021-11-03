@@ -1,0 +1,10 @@
+#: import gch kivy.utils.get_color_from_hex
+
+<ProviderSetupScreen>
+
+    canvas.before:
+        Color:
+            rgba: gch("#35353f")
+        Rectangle:
+            size: self.size
+            pos: self.pos
