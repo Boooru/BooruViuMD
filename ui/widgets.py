@@ -3,7 +3,10 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import AsyncImage, Image
 from kivy.uix.label import Label
+from kivy.uix.widget import Widget
 from kivymd.material_resources import dp
+from kivymd.uix import MDAdaptiveWidget
+from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.label import MDLabel
 from kivymd.uix.list import MDList
@@ -36,6 +39,22 @@ class MetaDataImage(CommonGestures, AsyncImage):
             main.async_downloader.submit_url(self.meta_data.image_full, headers=self.meta_data.headers)
         else:
             Logger.warn("Can't save image with url: " + str(self.meta_data.image_full))
+
+
+class ImageContainer(MDBoxLayout):
+
+    def __init__(self, image=None, **kwargs):
+        super(ImageContainer, self).__init__(**kwargs)
+        self.image = image
+
+    def update_image(self, image):
+        if self.image:
+            print("Switching away from " + self.image.source)
+            self.remove_widget(self.image)
+
+        self.image = image
+
+        self.add_widget(self.image)
 
 
 class FuncButton(CommonGestures, Label):
