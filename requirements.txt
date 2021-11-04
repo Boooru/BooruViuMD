@@ -1,4 +1,5 @@
 Kivy[full]~=2.0.0
+Kivymd
 twitter==1.19.3
 requests~=2.23.0
 configparser==5.0.2
