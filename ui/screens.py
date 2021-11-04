@@ -3,26 +3,20 @@ import gc
 
 from kivy import Logger
 from kivy.app import App
-from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.image import AsyncImage
 from kivy.uix.video import Video
-from kivymd.material_resources import dp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDTextButton
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.label import MDLabel
-from kivymd.uix.list import MDList
 from kivymd.uix.screen import MDScreen
 
 import assets.strings
-import core.caches
 from core import caches
-from core.structures.Entry import Entry
-from ui.widgets import SwitchArray
-
-from ui.widgets import MetaDataImage
 from core.caches import provider_cache as providers
+from core.structures.Entry import Entry
+from ui.widgets import MetaDataImage
+from ui.widgets import SwitchArray
 
 
 class ProviderSetupScreen(MDScreen):
@@ -54,7 +48,7 @@ class ProviderSetupScreen(MDScreen):
 
         b = MDTextButton(text='Ready!')
         b.adaptive_width = b.adaptive_height = b.adaptive_size = True
-        b.on_release = lambda a=None: set_screen(self, 'root scroll screen')
+        b.on_release = lambda a=None: set_screen('root scroll screen')
 
         self.right_col.add_widget(b)
 
@@ -118,7 +112,7 @@ class RootScrollScreen(MDScreen):
                 img.size_hint = (1, 1)
                 meta_data = copy.deepcopy(img.meta_data)
                 img.func = lambda a=None: set_big_screen_metadata(self, a,
-                                                                  lambda: set_screen(self, 'big view screen'))
+                                                                  lambda: set_screen('big view screen'))
                 image_pane.add_widget(img)
         return image_pane
 
@@ -144,12 +138,13 @@ class BigViewScreen(MDScreen):
         print("Metadata: " + str(new_image.meta_data.as_dict()))
 
         app = App.get_running_app()  # get a reference to the running App
-        big_view_screen = app.root.get_screen('big view screen')  # get a reference to the MainScreen
+        big_view_screen = app.root.ids.screen_manager.get_screen('big view screen')  # get a reference to the MainScreen
         big_view_screen.ids.main_image_container.update_image(new_image)
 
 
-def set_screen(target, val):
-    target.parent.current = val
+def set_screen(val):
+    app = App.get_running_app()
+    app.root.ids.screen_manager.current = val
 
 
 def set_big_screen_metadata(caller: MDScreen, meta_data: Entry, also=None):
