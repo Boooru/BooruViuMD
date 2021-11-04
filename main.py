@@ -1,18 +1,19 @@
 import os
+import sys
+from kivy.resources import resource_add_path, resource_find
 
 from kivy import platform
 from kivy.config import Config
-from kivy.core.window import Window
 from kivy.lang import Builder
 from kivymd.app import MDApp
 
 import core.caches
-from core.structures.ImageProviderManager import ProviderManager
-
-from flow.preprocessing.download import AsyncDownloader
 from util import io
+from core.structures.ImageProviderManager import ProviderManager
+from flow.preprocessing.download import AsyncDownloader
 
 async_downloader = AsyncDownloader()
+
 
 class BooruApp(MDApp):
     def __init__(self, **kwargs):
@@ -28,21 +29,28 @@ class BooruApp(MDApp):
 
 
 if __name__ == "__main__":
-    Window.size = (1600, 1080)
 
-    if platform == 'win':
-        # Dispose of that nasty red dot on Windows
-        Config.set('input', 'mouse', 'mouse, disable_multitouch')
+    try:
+        if hasattr(sys, '_MEIPASS'):
+            resource_add_path(os.path.join(sys._MEIPASS))
 
-    Config.set('graphics', 'resizable', True)
-    Config.set('kivy', 'exit_on_escape', 0)
+        if platform == 'win':
+            # Dispose of that nasty red dot on Windows
+            Config.set('input', 'mouse', 'mouse, disable_multitouch')
 
-    io.load_api_keys()
-    io.load_settings()
+        Config.set('graphics', 'resizable', True)
+        Config.set('kivy', 'exit_on_escape', 0)
 
-    for kv_file in os.listdir("kv"):
-        with open(os.path.join("kv", kv_file), encoding="utf-8") as kv:
-            Builder.load_string(kv.read())
+        io.load_api_keys()
+        io.load_settings()
 
-    print("Running app")
-    BooruApp().run()
+        for kv_file in os.listdir("kv"):
+            with open(os.path.join("kv", kv_file), encoding="utf-8") as kv:
+                Builder.load_string(kv.read())
+
+        print("Running app")
+        BooruApp().run()
+
+    except Exception as e:
+        print(e)
+        input("Press enter.")
