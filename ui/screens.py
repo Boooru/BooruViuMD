@@ -20,9 +20,11 @@ import assets.strings
 from core import caches
 from core.caches import provider_cache as providers
 from core.structures.Entry import Entry
+from core.structures.ImageProvider import ImageProvider
 from ui.effects import ImageOverscroll
 from ui.widgets import MetaDataImage
 from ui.widgets import SwitchArray
+from util import utils, provider_util
 
 
 class ProviderSetupScreen(MDScreen):
@@ -71,8 +73,11 @@ class RootScrollScreen(MDScreen):
 
     def search(self):
         self.ids.image_scroll_view.clear_widgets()
+
         gc.collect(generation=2)
         self.set_scroller_func()
+
+        self.set_title(providers['root scroll screen'].get_active_provider())
 
         composition = providers['root scroll screen'].get_active_provider().compose()
         urls = providers['root scroll screen'].get_active_provider().search()
@@ -175,6 +180,12 @@ class RootScrollScreen(MDScreen):
     def set_text_field(self, text: str = ""):
         self.ids.tags.text = text
 
+    def set_title(self, title):
+
+        if type(title) == str:
+            self.ids.tool_bar.title = title
+        elif isinstance(title, ImageProvider):
+            self.ids.tool_bar.title = provider_util.translate(title)
 
 class BigViewScreen(MDScreen):
 

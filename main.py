@@ -30,27 +30,23 @@ class BooruApp(MDApp):
 
 if __name__ == "__main__":
 
-    try:
-        if hasattr(sys, '_MEIPASS'):
-            resource_add_path(os.path.join(sys._MEIPASS))
+    if hasattr(sys, '_MEIPASS'):
+        resource_add_path(os.path.join(sys._MEIPASS))
 
-        if platform == 'win':
-            # Dispose of that nasty red dot on Windows
-            Config.set('input', 'mouse', 'mouse, disable_multitouch')
+    if platform == 'win':
+        # Dispose of that nasty red dot on Windows
+        Config.set('input', 'mouse', 'mouse, disable_multitouch')
 
-        Config.set('graphics', 'resizable', True)
-        Config.set('kivy', 'exit_on_escape', 0)
+    Config.set('graphics', 'resizable', True)
+    Config.set('kivy', 'exit_on_escape', 0)
 
-        io.load_api_keys()
-        io.load_settings()
+    io.load_api_keys()
+    io.load_settings()
 
-        for kv_file in os.listdir("kv"):
-            with open(os.path.join("kv", kv_file), encoding="utf-8") as kv:
-                Builder.load_string(kv.read())
+    for kv_file in os.listdir("kv"):
+        with open(os.path.join("kv", kv_file), encoding="utf-8") as kv:
+            Builder.load_string(kv.read())
 
-        print("Running app")
-        BooruApp().run()
+    print("Running app")
+    BooruApp().run()
 
-    except Exception as e:
-        print(e)
-        input("Press enter.")
