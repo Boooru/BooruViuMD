@@ -133,16 +133,24 @@ class RootScrollScreen(MDScreen):
     def add_tag(self, tag: Union[str, OneLineListItem]):
         text = None
         if type(tag) == str:
-            text = tag
+            for part in tag.split(" "):
+                text = part
+
+                chip = MDChip(text=part)
+                chip.icon_right = "close-circle-outline"
+                chip.pos_hint = {'center_y': 0.5}
+                chip.bind(on_press=self.remove_tag_chip)
+                self.ids.tag_container.add_widget(chip)
+                providers['root scroll screen'].get_active_provider().add_tag(part)
+
         elif type(tag) == OneLineListItem:
             text = tag.text
-
-        chip = MDChip(text=text)
-        chip.icon_right = "close-circle-outline"
-        chip.pos_hint = {'center_y': 0.5}
-        chip.bind(on_press=self.remove_tag_chip)
-        self.ids.tag_container.add_widget(chip)
-        providers['root scroll screen'].get_active_provider().add_tag(text)
+            chip = MDChip(text=text)
+            chip.icon_right = "close-circle-outline"
+            chip.pos_hint = {'center_y': 0.5}
+            chip.bind(on_press=self.remove_tag_chip)
+            self.ids.tag_container.add_widget(chip)
+            providers['root scroll screen'].get_active_provider().add_tag(text)
 
     def remove_tag_chip(self, chip: Union[str, MDChip]):
         if type(chip) == MDChip:

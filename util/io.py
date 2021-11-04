@@ -53,7 +53,7 @@ def load_settings():
             if section.title() in strings.ALL_PROVIDERS:
                 user_rules[section.title()] = {}
                 for value in parser[section.title()].keys():
-                    user_rules[section.title()][value] = parser[section.title()][value]
+                    user_rules[section.title()][value] = parser[section.title()][value].replace('"', '')
 
             elif section.title() == "Main":
                 for value in parser[section.title()].keys():
