@@ -5,14 +5,22 @@ import webbrowser
 from typing import Optional, Union
 
 from kivy import Logger
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.image import AsyncImage
-from kivy.uix.label import Label
-from kivy.uix.popup import Popup
 
 import assets
 import core.caches
 import util
+from ui.layouts import ClickableBoxLayout
+
+
+def open_link_in_browser(data):
+    from ui.widgets import ClickableAsyncImage
+
+    if type(data) == str:
+        webbrowser.open(data, new=0)
+    elif isinstance(data, ClickableAsyncImage):
+        webbrowser.open(data.meta_data.image_full, new=0)
+    elif isinstance(data, ClickableBoxLayout):
+        webbrowser.open(data.data['url'])
 
 
 # Returns the URL of the highest-bitrate MP4 in a twitter post
@@ -89,7 +97,6 @@ def get_saucenao_results(url: str):
     except:
         Logger.warn("Couldn't make SauceNao API request!")
         return []
-
 
 
 def make_temp_dir():

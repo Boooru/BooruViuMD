@@ -1,5 +1,6 @@
 import copy
 import gc
+from typing import Union
 
 from kivy import Logger
 from kivy.app import App
@@ -7,6 +8,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.video import Video
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDTextButton
+from kivymd.uix.chip import MDChip
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import MDScreen
@@ -67,11 +69,11 @@ class RootScrollScreen(MDScreen):
         self.ids.image_scroll_view.clear_widgets()
         gc.collect(generation=2)
 
-        providers['root scroll screen'].get_active_provider().clear_tags()
+        #providers['root scroll screen'].get_active_provider().clear_tags()
 
-        if self.ids.tags.text != "":
-            providers['root scroll screen'].get_active_provider().add_tags_from_string(
-                self.ids.tags.text)
+        #if self.ids.tags.text != "":
+        #    providers['root scroll screen'].get_active_provider().add_tags_from_string(
+        #        self.ids.tags.text)
 
         composition = providers['root scroll screen'].get_active_provider().compose()
         urls = providers['root scroll screen'].get_active_provider().search()
@@ -80,7 +82,9 @@ class RootScrollScreen(MDScreen):
 
         # Adding GridLayout to ScrollView
         self.ids.image_scroll_view.add_widget(pane)
-        self.ids.image_scroll_view.scroll_to(pane.children[-1])
+
+        if len(pane.children) > 0:
+            self.ids.image_scroll_view.scroll_to(pane.children[-1])
 
     def generate_image_pane(self, entries: list, existing_pane=None) -> GridLayout:
         image_pane = GridLayout(cols=3, spacing=0, size_hint=(1, None), pos=(0, 0))
@@ -116,6 +120,29 @@ class RootScrollScreen(MDScreen):
                 image_pane.add_widget(img)
         return image_pane
 
+    def add_tag(self, tag: str):
+        chip = MDChip(text=tag)
+        chip.icon_right = "close-circle-outline"
+        chip.pos_hint = {'center_y': 0.5}
+        chip.bind(on_press=self.remove_tag_chip)
+        self.ids.tag_container.add_widget(chip)
+        providers['root scroll screen'].get_active_provider().add_tag(tag)
+
+    def remove_tag_chip(self, chip: Union[str, MDChip]):
+        if type(chip) == MDChip:
+            self.ids.tag_container.remove_widget(chip)
+            providers['root scroll screen'].get_active_provider().remove_tag(chip.text)
+        elif type(chip) == str:
+            for child in self.ids.tag_container.children:
+                if child.text == chip:
+                    self.ids.tag_container.remove_widget(child)
+                    providers['root scroll screen'].get_active_provider().remove_tag(chip)
+
+    def clear_chips(self):
+        print(str(len(self.ids.tag_container.children)) + " tag chips!")
+        while len(self.ids.tag_container.children) > 0:
+            self.remove_tag_chip(self.ids.tag_container.children[0])
+
 
 class BigViewScreen(MDScreen):
 
@@ -123,19 +150,19 @@ class BigViewScreen(MDScreen):
         super(BigViewScreen, self).__init__(**kwargs)
 
         self.meta_data: Entry = None
+        self.big_image: MetaDataImage = None
 
     def update_metadata(self, meta_data: Entry):
         if not meta_data:
             Logger.warn("Cannot update screen with null metadata!")
             return
 
-        print("Updating...")
-        print("Metadata: " + str(meta_data.as_dict()))
         headers = caches.provider_cache['root scroll screen'].get_active_provider().get_headers()
         new_image = MetaDataImage(source=meta_data.image_full, keep_ratio=True, allow_stretch=True,
                                   extra_headers=headers, meta_data=meta_data)
 
-        print("Metadata: " + str(new_image.meta_data.as_dict()))
+        self.big_image = new_image
+        self.meta_data = meta_data
 
         app = App.get_running_app()  # get a reference to the running App
         big_view_screen = app.root.ids.screen_manager.get_screen('big view screen')  # get a reference to the MainScreen

@@ -111,6 +111,10 @@ class ImageProvider:
     def get_tags(self) -> list[str]:
         return self.__tags
 
+    def remove_tag(self, tag:str):
+        if tag in self.__tags:
+            self.__tags.remove(tag)
+
     def clear_tags(self):
         self.__tags = []
 

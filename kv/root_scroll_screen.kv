@@ -12,19 +12,55 @@
     MDBoxLayout:
         id: outer_box_layout
         orientation: "vertical"
-        size_hint: None, None
-        size: (root.size[0], root.size[1])
-
-        TextInput
-            id:tags
-            size_hint: 0.5, None
+        #size_hint: None, None
+        #size: (root.size[0], root.size[1])
 
         MDToolbar:
             id: tool_bar
             title: "BooruViu"
             pos_hint: {"top" : 1}
             elevation: 10
-            right_action_items: [["magnify", lambda x: root.search()],["cog", lambda x: set_screen(root, "provider setup screen")], ["text", lambda x:x]]
+            right_action_items: [["magnify", lambda x: root.search()],["cog", lambda x: set_screen("provider setup screen")], ["text", lambda x:x]]
+
+        MDGridLayout:
+
+            canvas.before:
+                Color:
+                    rgba: gch("#494952")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            id: under_bar_container
+            rows: 1
+            size_hint_max_y: 0.2
+            adaptive_height: True
+            spacing: 35
+
+            MDTextField:
+                id: tags
+                helper_text: "Add a tag"
+                mode: "rectangle"
+                size_hint_x: 0.1
+                on_text_validate: root.add_tag(tags.text)
+
+            ScrollView:
+                id: tag_scroller:
+                do_scroll_x: True
+                do_scroll_y: False
+                size_hint_y: 1
+
+                MDBoxLayout:
+                    id: tag_container
+                    adaptive_width: True
+                    orientation: 'horizontal'
+                    spacing: 15
+                    pos_hint: {'center_y': 0.5}
+
+            MDRaisedButton:
+                text: "CLEAR"
+                on_press: root.clear_chips()
+                pos_hint: {'center_y': 0.45}
 
 
         ScrollView:
