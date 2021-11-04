@@ -9,11 +9,11 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.video import Video
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDTextButton, MDIconButton
+from kivymd.uix.button import MDTextButton
 from kivymd.uix.chip import MDChip
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.label import MDLabel
-from kivymd.uix.list import MDList, OneLineListItem, OneLineAvatarListItem
+from kivymd.uix.list import MDList, OneLineListItem
 from kivymd.uix.screen import MDScreen
 
 import assets.strings
@@ -24,7 +24,7 @@ from core.structures.ImageProvider import ImageProvider
 from ui.effects import ImageOverscroll
 from ui.widgets import MetaDataImage
 from ui.widgets import SwitchArray
-from util import utils, provider_util
+from util import provider_util
 
 
 class ProviderSetupScreen(MDScreen):
