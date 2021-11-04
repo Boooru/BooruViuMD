@@ -2,6 +2,7 @@
 #: import set_screen ui.screens.set_screen
 #: import async_downloader main.async_downloader
 #: import open_link_in_browser util.utils.open_link_in_browser
+#: import provider_cache core.caches.provider_cache
 
 <BigViewScreen>
 
@@ -28,4 +29,4 @@
             pos_hint: {"bottom" : 1}
             elevation: 10
             left_action_items: [["arrow-left", lambda x: set_screen("root scroll screen")]]
-            right_action_items: [["download", lambda x: async_downloader.submit_url(root.meta_data.image_full)], ["open-in-new", lambda x: open_link_in_browser(root.meta_data.image_full)], ["account-search", lambda x: open_link_in_browser(root.meta_data.source)], ["tag-multiple", lambda x:x]]
+            right_action_items: [["download", lambda x: async_downloader.submit_url(root.meta_data.image_full, provider_cache['root scroll screen'].get_active_provider().get_headers   ())], ["open-in-new", lambda x: open_link_in_browser(root.meta_data.image_full)], ["account-search", lambda x: open_link_in_browser(root.meta_data.source)], ["tag-multiple", lambda x:root.toggle_tags()]]

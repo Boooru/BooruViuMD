@@ -25,7 +25,9 @@ class PixivProvider(ImageProvider):
         if len(self.get_tags()) > 0:
             self.__target = self.get_tags()[0]
 
-        return self.get_tags()[0]
+            return self.get_tags()[0]
+
+        return ""
 
     def search(self, reset_page: bool = True, next_page=None) -> list[Entry]:
         if not os.path.isdir("./temp"):

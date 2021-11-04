@@ -1,22 +1,26 @@
 import copy
 import gc
+from datetime import datetime
 from typing import Union
 
 from kivy import Logger
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.video import Video
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDTextButton
+from kivymd.uix.button import MDTextButton, MDIconButton
 from kivymd.uix.chip import MDChip
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.label import MDLabel
+from kivymd.uix.list import MDList, OneLineListItem, OneLineAvatarListItem
 from kivymd.uix.screen import MDScreen
 
 import assets.strings
 from core import caches
 from core.caches import provider_cache as providers
 from core.structures.Entry import Entry
+from ui.effects import ImageOverscroll
 from ui.widgets import MetaDataImage
 from ui.widgets import SwitchArray
 
@@ -68,12 +72,7 @@ class RootScrollScreen(MDScreen):
     def search(self):
         self.ids.image_scroll_view.clear_widgets()
         gc.collect(generation=2)
-
-        #providers['root scroll screen'].get_active_provider().clear_tags()
-
-        #if self.ids.tags.text != "":
-        #    providers['root scroll screen'].get_active_provider().add_tags_from_string(
-        #        self.ids.tags.text)
+        self.set_scroller_func()
 
         composition = providers['root scroll screen'].get_active_provider().compose()
         urls = providers['root scroll screen'].get_active_provider().search()
@@ -85,6 +84,17 @@ class RootScrollScreen(MDScreen):
 
         if len(pane.children) > 0:
             self.ids.image_scroll_view.scroll_to(pane.children[-1])
+
+    def get_next_page(self, caller=None):
+        debug_timer = datetime.now()
+        results = providers['root scroll screen'].get_active_provider().more()
+        print("get_next_page done with more in " + str(datetime.now() - debug_timer))
+        if not results:
+            print("No results found!")
+
+        self.generate_image_pane(results, self.ids.image_scroll_view.children[0])
+
+        print("get_next_page done in " + str(datetime.now() - debug_timer))
 
     def generate_image_pane(self, entries: list, existing_pane=None) -> GridLayout:
         image_pane = GridLayout(cols=3, spacing=0, size_hint=(1, None), pos=(0, 0))
@@ -120,13 +130,19 @@ class RootScrollScreen(MDScreen):
                 image_pane.add_widget(img)
         return image_pane
 
-    def add_tag(self, tag: str):
-        chip = MDChip(text=tag)
+    def add_tag(self, tag: Union[str, OneLineListItem]):
+        text = None
+        if type(tag) == str:
+            text = tag
+        elif type(tag) == OneLineListItem:
+            text = tag.text
+
+        chip = MDChip(text=text)
         chip.icon_right = "close-circle-outline"
         chip.pos_hint = {'center_y': 0.5}
         chip.bind(on_press=self.remove_tag_chip)
         self.ids.tag_container.add_widget(chip)
-        providers['root scroll screen'].get_active_provider().add_tag(tag)
+        providers['root scroll screen'].get_active_provider().add_tag(text)
 
     def remove_tag_chip(self, chip: Union[str, MDChip]):
         if type(chip) == MDChip:
@@ -143,6 +159,14 @@ class RootScrollScreen(MDScreen):
         while len(self.ids.tag_container.children) > 0:
             self.remove_tag_chip(self.ids.tag_container.children[0])
 
+    def set_scroller_func(self, _=None):
+        if self.ids.image_scroll_view.effect_cls != ImageOverscroll:
+            self.ids.image_scroll_view.effect_cls = ImageOverscroll
+        self.ids.image_scroll_view.effect_cls.func = self.get_next_page
+
+    def set_text_field(self, text: str = ""):
+        self.ids.tags.text = text
+
 
 class BigViewScreen(MDScreen):
 
@@ -151,6 +175,7 @@ class BigViewScreen(MDScreen):
 
         self.meta_data: Entry = None
         self.big_image: MetaDataImage = None
+        self.tag_scroll: ScrollView = None
 
     def update_metadata(self, meta_data: Entry):
         if not meta_data:
@@ -167,6 +192,37 @@ class BigViewScreen(MDScreen):
         app = App.get_running_app()  # get a reference to the running App
         big_view_screen = app.root.ids.screen_manager.get_screen('big view screen')  # get a reference to the MainScreen
         big_view_screen.ids.main_image_container.update_image(new_image)
+
+        container = self.ids.main_image_container
+        if self.tag_scroll in container.children:
+            container.remove_widget(self.tag_scroll)
+        self.generate_tag_scroll()
+
+    def generate_tag_scroll(self):
+        container = self.ids.main_image_container
+
+        tag_scroll = ScrollView()
+        tag_list = MDList()
+
+        for tag in self.meta_data.tags:
+            line_item = OneLineListItem(text=tag)
+            root_scroll_screen = App.get_running_app().root.ids.screen_manager.get_screen('root scroll screen')
+            line_item.bind(on_press=root_scroll_screen.add_tag)
+            tag_list.add_widget(line_item)
+
+        tag_scroll.add_widget(tag_list)
+        tag_scroll.do_scroll_x = False
+        tag_scroll.do_scroll_y = True
+        self.tag_scroll = tag_scroll
+
+    def toggle_tags(self):
+        container = self.ids.main_image_container
+
+        if self.tag_scroll in container.children:
+            container.remove_widget(self.tag_scroll)
+
+        else:
+            container.add_widget(self.tag_scroll)
 
 
 def set_screen(val):

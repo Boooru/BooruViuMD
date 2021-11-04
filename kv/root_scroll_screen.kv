@@ -42,7 +42,7 @@
                 helper_text: "Add a tag"
                 mode: "rectangle"
                 size_hint_x: 0.1
-                on_text_validate: root.add_tag(tags.text)
+                on_text_validate: root.add_tag(tags.text), root.set_text_field()
 
             ScrollView:
                 id: tag_scroller:
@@ -60,7 +60,7 @@
             MDRaisedButton:
                 text: "CLEAR"
                 on_press: root.clear_chips()
-                pos_hint: {'center_y': 0.45}
+
 
 
         ScrollView:
