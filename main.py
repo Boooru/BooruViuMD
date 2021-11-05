@@ -1,5 +1,7 @@
 import os
 import sys
+
+from kivy.loader import Loader
 from kivy.resources import resource_add_path, resource_find
 
 from kivy import platform
@@ -22,10 +24,12 @@ class BooruApp(MDApp):
         self.provider_manager = ProviderManager()
 
     def build(self):
-        self.theme_cls.primary_palette = "Pink"
-        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Blue"
+        self.theme_cls.theme_style = "Light"
 
         core.caches.provider_cache['root scroll screen'] = ProviderManager()
+
+        Loader.loading_image = 'assets/images/loading.gif'
 
 
 if __name__ == "__main__":
