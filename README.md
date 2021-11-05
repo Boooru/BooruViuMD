@@ -1,3 +1,5 @@
+![banner](assets/images/banner.png)
+
 # BooruViu
 
 A user-friendly GUI application meant to stream collections of images from your favorite artists and repositories. Fetch images from Twitter, Pixiv, or even your favorite Booru!
