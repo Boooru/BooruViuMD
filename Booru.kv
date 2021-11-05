@@ -1,7 +1,7 @@
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
-#:import ProviderSetupScreen ui.screens.ProviderSetupScreen
-#:import RootScrollScreen ui.screens.RootScrollScreen
-#:import BigViewScreen ui.screens.BigViewScreen
+#:import ProviderSetupScreen ui.screens.screen_util.ProviderSetupScreen
+#:import RootScrollScreen ui.screens.home_screen.HomeScreen
+#:import BigViewScreen ui.screens.big_view_screen.BigViewScreen
 
 MDNavigationLayout:
     id: root_layout
@@ -10,8 +10,8 @@ MDNavigationLayout:
         id: screen_manager
         transition: FadeTransition()
 
-        RootScrollScreen:
-            name: "root scroll screen"
+        HomeScreen:
+            name: "home screen"
 
         ProviderSetupScreen:
             name: "provider setup screen"

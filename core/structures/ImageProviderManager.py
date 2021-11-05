@@ -13,7 +13,7 @@ class ProviderManager:
         self.__provider = None
         self.__user_rules = caches.user_rules
 
-        if caches.general_config and caches.general_config['default_provider']:
+        if caches.general_config and 'default_provider' in caches.general_config:
             self.DEFAULT_PROVIDER = caches.general_config['default_provider']
         self.set_provider(self.DEFAULT_PROVIDER)
 
@@ -45,5 +45,5 @@ class ProviderManager:
 
         app = App.get_running_app()  # get a reference to the running App
         if app.root:
-            root_scroll_screen = app.root.ids.screen_manager.get_screen('root scroll screen')
+            root_scroll_screen = app.root.ids.screen_manager.get_screen('home screen')
             root_scroll_screen.set_title(provider_name)

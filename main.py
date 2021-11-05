@@ -24,10 +24,17 @@ class BooruApp(MDApp):
         self.provider_manager = ProviderManager()
 
     def build(self):
-        self.theme_cls.primary_palette = "Blue"
-        self.theme_cls.theme_style = "Light"
+        if 'color' in core.caches.general_config:
+            self.theme_cls.primary_palette = core.caches.general_config['color']
+        else:
+            self.theme_cls.primary_palette = "Purple"
 
-        core.caches.provider_cache['root scroll screen'] = ProviderManager()
+        if 'theme' in core.caches.general_config:
+            self.theme_cls.theme_style = core.caches.general_config['theme']
+        else:
+            self.theme_cls.theme_style = "Dark"
+
+        core.caches.provider_cache['home screen'] = ProviderManager()
 
         Loader.loading_image = 'assets/images/loading.gif'
 

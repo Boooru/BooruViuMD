@@ -1,4 +1,4 @@
-#: import set_screen ui.screens.set_screen
+#: import set_screen ui.screens.screen_util.set_screen
 
 <ContentNavigationDrawer>:
     orientation: "vertical"
@@ -11,8 +11,10 @@
         Image:
             id: avatar
             size_hint: None, None
-            size: "56dp", "56dp"
-            source: "kivymd.png"
+            size_hint_x: 1
+            allow_stretch: True
+            keep_ratio: True
+            source: "assets/images/banner.png"
     MDLabel:
         text: "BooruViu"
         font_style: "Button"
@@ -30,7 +32,7 @@
                 text: "Home"
                 on_press:
                     root.parent.set_state("close")
-                    set_screen('root scroll screen')
+                    set_screen('home screen')
             OneLineListItem:
                 text: "Settings"
                 on_press:
