@@ -10,6 +10,7 @@ from kivy.lang import Builder
 from kivymd.app import MDApp
 
 import core.caches
+import util.io
 from util import io
 from core.structures.ImageProviderManager import ProviderManager
 from flow.preprocessing.download import AsyncDownloader
@@ -37,6 +38,9 @@ class BooruApp(MDApp):
         core.caches.provider_cache['home screen'] = ProviderManager()
 
         Loader.loading_image = 'assets/images/loading.gif'
+
+    def on_stop(self):
+        util.io.save_settings()
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ import webbrowser
 from typing import Optional, Union
 
 from kivy import Logger
+from kivy.app import App
 
 import assets
 import core.caches
@@ -105,12 +106,13 @@ def make_temp_dir():
     except FileExistsError:
         pass
 
+
 # https://www.redgifs.com/watch/somethinghere
 # to
 # https://thumbs2.redgifs.com/somethinghere.mp4 if size == None
 # or
 # https://thumbs2.redgifs.com/somethinghere.mp4-mobile if size == "mobile"
-def transform_redgif(url:str, size="") -> str:
+def transform_redgif(url: str, size="") -> str:
     if contains_domain(url, "redgifs") or contains_domain(url, 'gyfcat'):
         from bs4 import BeautifulSoup
         import urllib.request
@@ -128,4 +130,14 @@ def transform_redgif(url:str, size="") -> str:
         v_element = soup.find_all("meta", {"property": "og:video"})
 
         return v_element[0].get('content')
+
+
+def set_app_color(color):
+    core.caches.general_config['color'] = color
+    App.get_running_app().theme_cls.primary_palette = color
+
+
+def set_app_theme(theme):
+    core.caches.general_config['theme'] = theme
+    App.get_running_app().theme_cls.theme_style = theme
 

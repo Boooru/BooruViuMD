@@ -6,6 +6,7 @@ from os import path
 
 from kivy import Logger
 
+import assets.strings
 from assets import strings
 from core import caches
 
@@ -64,6 +65,31 @@ def load_settings():
     else:
         cf = open(strings.CONFIG_FILE_NAME, 'x')
         cf.close()
+
+
+def save_settings():
+    Logger.info("Writing config data...")
+
+    parser = ConfigParser()
+    parser.add_section("Main")
+
+    print("Main:")
+    for key in caches.general_config:
+        print(str(key) + ": " + str(caches.general_config[key]))
+        parser["Main"][key] = caches.general_config[key]
+
+    for provider in caches.user_rules:
+        print(str(provider))
+        parser.add_section(provider)
+        for key in caches.user_rules[provider]:
+            print(str(key) + ": " + str(caches.user_rules[provider][key]))
+            parser[provider][key] = caches.user_rules[provider][key]
+
+    if os.path.exists(assets.strings.CONFIG_FILE_NAME):
+        os.remove(assets.strings.CONFIG_FILE_NAME)
+
+    with open(assets.strings.CONFIG_FILE_NAME, 'w') as configfile:
+        parser.write(configfile)
 
 
 def run_executable(path_to_file, args: str = "", is_async: bool = False):
