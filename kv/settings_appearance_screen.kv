@@ -1,6 +1,14 @@
 #: import SettingsToolbar ui.screens.settings_screens.SettingsToolbar
 
 <SettingsAppearanceScreen>
+
+    canvas.before:
+        Color:
+            rgba: gch("#35353f")
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
     MDGridLayout:
         cols: 1
         size: (root.size[0], root.size[1])
@@ -12,29 +20,35 @@
             id: settings_scroller
             do_scroll_y: True
             do_scroll_x: False
-            size_hint: 1, None
 
             MDGridLayout:
                 id: content_container
                 cols: 1
+                adaptive_height: True
 
                 MDBoxLayout:
                     id: color_container
                     orientation: 'horizontal'
+                    adaptive_height: True
+                    spacing: 30
+                    padding: 30
 
                     MDTextField:
                         id: color_text_box
                         helper_text: "Color"
                         mode: "rectangle"
-                        on_text_validate: app.theme_cls.primary_palette: self.text
+                        on_text_validate: app.theme_cls.primary_palette = self.text
 
                     MDRaisedButton:
                         text: 'RESET'
-                        #on_press: lambda x: color_text_box.text: 'Blue', app.theme_cls.primary_palette: 'Blue'
+                        #on_press: color_text_box.text = "Blue", app.theme_cls.primary_palette = "Blue"
 
                 MDBoxLayout:
                     id: theme_container
                     orientation: 'horizontal'
+                    adaptive_height: True
+                    spacing: 30
+                    padding: 30
 
                     MDTextField:
                         id: color_text_box
