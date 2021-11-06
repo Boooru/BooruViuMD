@@ -4,7 +4,7 @@ import sys
 from kivy.loader import Loader
 from kivy.resources import resource_add_path, resource_find
 
-from kivy import platform
+from kivy import platform, Logger
 from kivy.config import Config
 from kivy.lang import Builder
 from kivymd.app import MDApp
@@ -56,6 +56,7 @@ if __name__ == "__main__":
 
     for kv_file in os.listdir("kv"):
         with open(os.path.join("kv", kv_file), encoding="utf-8") as kv:
+            Logger.info("Loading " + str(kv_file))
             Builder.load_string(kv.read())
 
     print("Running app")

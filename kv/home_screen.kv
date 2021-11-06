@@ -12,15 +12,13 @@
     MDBoxLayout:
         id: outer_box_layout
         orientation: "vertical"
-        #size_hint: None, None
-        #size: (root.size[0], root.size[1])
 
         MDToolbar:
             id: tool_bar
             title: "BooruViu"
             pos_hint: {"top" : 1}
             elevation: 10
-            right_action_items: [["magnify", lambda x: root.search()],["cog", lambda x: set_screen("provider setup screen")], ["text", lambda x:x]]
+            right_action_items: [["magnify", lambda x: root.search()],["cog", lambda x: set_screen("settings home screen")], ["text", lambda x:x]]
 
         MDGridLayout:
 
