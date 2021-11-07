@@ -29,6 +29,9 @@ class ProviderManager:
         if provider_name not in caches.user_rules:
             return
 
+        self.read_user_rules(provider_name)
+
+    def read_user_rules(self, provider_name):
         if "tags" in self.__user_rules[provider_name] and self.__user_rules[provider_name]["tags"]:
             self.__provider.add_tags_from_string(tags=self.__user_rules[provider_name]["tags"])
 

@@ -1,4 +1,5 @@
 #: import gch kivy.utils.get_color_from_hex
+#: import open_booru_config_screen ui.screens.settings_screens.open_booru_config_screen
 
 <SettingsProviderScreen>
 
@@ -38,6 +39,7 @@
 
                 MDIconButton:
                     icon: 'cog'
+                    on_press: open_booru_config_screen("Gelbooru")
 
                 MDLabel:
                     text: "Danbooru"
