@@ -2,13 +2,13 @@
 
 # BooruViu
 
-A user-friendly GUI application meant to stream collections of images from your favorite artists and repositories. Fetch images from Twitter, Pixiv, or even your favorite Booru!
+A user-friendly GUI application meant to stream collections of images from your favorite artists and repositories. Fetch images from Twitter, Pixiv, or even your favorite Booru! Switch seamlessly and easily between your favorite image providers, and configure each of them just the way you want!
 
 ## Features
 
 BooruViu implements a suite of features, some of which may not be available on certain image sources.
 - All
-    - Easily download, go to source, reverse-image-search, or open in browser
+    - Easily download, go to source, reverse-image-search (coming soon), or open in browser
 - Boorus:
     - Full booru syntax support, including tags and sorting.
     - Configure individual booru's to blacklist or require specific tags automatically
