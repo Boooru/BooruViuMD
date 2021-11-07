@@ -10,7 +10,6 @@ from kivy.app import App
 import assets
 import core.caches
 import util
-from ui.layouts import ClickableBoxLayout
 
 
 def open_link_in_browser(data):
@@ -20,8 +19,6 @@ def open_link_in_browser(data):
         webbrowser.open(data, new=0)
     elif isinstance(data, ClickableAsyncImage):
         webbrowser.open(data.meta_data.image_full, new=0)
-    elif isinstance(data, ClickableBoxLayout):
-        webbrowser.open(data.data['url'])
 
 
 # Returns the URL of the highest-bitrate MP4 in a twitter post

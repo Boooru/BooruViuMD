@@ -42,8 +42,3 @@ class ProviderManager:
 
         if "always_safe" in self.__user_rules[provider_name] and self.__user_rules[provider_name]["always_safe"]:
             self.__provider.set_always_safe(bool(self.__user_rules[provider_name]['always_safe']))
-
-        app = App.get_running_app()  # get a reference to the running App
-        if app.root:
-            root_scroll_screen = app.root.ids.screen_manager.get_screen('home screen')
-            root_scroll_screen.set_title(provider_name)

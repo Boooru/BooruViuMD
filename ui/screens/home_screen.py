@@ -119,7 +119,6 @@ class HomeScreen(MDScreen):
                     providers['home screen'].get_active_provider().remove_tag(chip)
 
     def clear_chips(self):
-        print(str(len(self.ids.tag_container.children)) + " tag chips!")
         while len(self.ids.tag_container.children) > 0:
             self.remove_tag_chip(self.ids.tag_container.children[0])
 
