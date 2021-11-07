@@ -52,7 +52,6 @@ class ImageContainer(MDBoxLayout):
 
     def update_image(self, image):
         if self.image:
-            print("Switching away from " + self.image.source)
             self.remove_widget(self.image)
 
         self.image = image

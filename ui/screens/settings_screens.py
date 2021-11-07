@@ -4,7 +4,6 @@ from kivymd.uix.toolbar import MDToolbar
 
 import assets.strings
 import core.caches
-import util.provider_util
 
 
 class SettingsToolbar(MDToolbar):
@@ -19,13 +18,12 @@ class SettingsProviderScreen(MDScreen):
 
     def __init__(self, **kwargs):
         super(SettingsProviderScreen, self).__init__(**kwargs)
-
         self.__switch_elements = [s.lower() + "_switch" for s in assets.strings.ALL_PROVIDERS]
 
     def set_provider(self, caller: MDSwitch, provider: str):
         if caller.active:
             self.reset_other_switches(exception=provider)
-            core.caches.provider_cache['root scroller provider'] = util.provider_util.translate(provider)()
+            core.caches.provider_cache['home screen'].set_provider(provider)
 
     def reset_other_switches(self, exception: str = None):
 
