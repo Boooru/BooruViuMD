@@ -35,8 +35,6 @@ class BooruApp(MDApp):
         else:
             self.theme_cls.theme_style = "Dark"
 
-        core.caches.provider_cache['home screen'] = ProviderManager()
-
         Loader.loading_image = 'assets/images/loading.gif'
 
     def on_stop(self):
@@ -57,6 +55,8 @@ if __name__ == "__main__":
 
     io.load_api_keys()
     io.load_settings()
+
+    core.caches.provider_cache['home screen'] = ProviderManager()
 
     for kv_file in os.listdir("kv"):
         with open(os.path.join("kv", kv_file), encoding="utf-8") as kv:

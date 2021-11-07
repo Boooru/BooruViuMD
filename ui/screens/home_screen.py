@@ -3,12 +3,14 @@ import gc
 from datetime import datetime
 from typing import Union
 
+from kivy.clock import Clock
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.video import Video
 from kivymd.uix.chip import MDChip
 from kivymd.uix.list import OneLineListItem
 from kivymd.uix.screen import MDScreen
 
+import ui.screens.screen_util
 from core.caches import provider_cache as providers
 from core.structures.ImageProvider import ImageProvider
 from ui.effects import ImageOverscroll
@@ -22,12 +24,20 @@ class HomeScreen(MDScreen):
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
 
+        self.menu = None
+
+        def get_menu(x):
+            x.menu = ui.screens.screen_util.build_provider_menu(self.ids.tool_bar)
+
+        Clock.schedule_once(lambda x: get_menu(self))
+
     def search(self):
         self.ids.image_scroll_view.clear_widgets()
 
         gc.collect(generation=2)
         self.set_scroller_func()
 
+        providers['home screen'].read_user_rules()
         self.set_title(providers['home screen'].get_active_provider())
 
         composition = providers['home screen'].get_active_provider().compose()

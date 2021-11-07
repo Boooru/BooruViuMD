@@ -1,5 +1,6 @@
 from kivy.app import App
 
+import util.provider_util
 from core import caches
 from core.structures import ImageProvider
 import assets.strings
@@ -29,9 +30,14 @@ class ProviderManager:
         if provider_name not in caches.user_rules:
             return
 
-        self.read_user_rules(provider_name)
+        self.read_user_rules()
 
-    def read_user_rules(self, provider_name):
+    def read_user_rules(self):
+        provider_name = util.provider_util.translate(self.__provider)
+
+        if provider_name not in self.__user_rules:
+            return
+
         if "tags" in self.__user_rules[provider_name] and self.__user_rules[provider_name]["tags"]:
             self.__provider.add_tags_from_string(tags=self.__user_rules[provider_name]["tags"])
 

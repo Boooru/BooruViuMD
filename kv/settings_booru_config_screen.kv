@@ -1,4 +1,5 @@
 #: import gch kivy.utils.get_color_from_hex
+#: import provider_cache core.caches.provider_cache
 
 <SettingsBooruConfigScreen>
 
@@ -20,7 +21,7 @@
             pos_hint: {"top" : 1}
             elevation: 10
 
-            left_action_items: [["arrow-left", lambda x: set_screen('provider setup screen')]]
+            left_action_items: [["arrow-left", lambda x: str(set_screen('provider setup screen')) + str(provider_cache['home screen'].read_user_rules())]]
 
         ScrollView:
             padding_x: 10

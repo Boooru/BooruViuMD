@@ -110,23 +110,26 @@ def make_temp_dir():
 # or
 # https://thumbs2.redgifs.com/somethinghere.mp4-mobile if size == "mobile"
 def transform_redgif(url: str, size="") -> str:
-    if contains_domain(url, "redgifs") or contains_domain(url, 'gyfcat'):
-        from bs4 import BeautifulSoup
-        import urllib.request
+    try:
+        if contains_domain(url, "redgifs") or contains_domain(url, 'gyfcat'):
+            from bs4 import BeautifulSoup
+            import urllib.request
 
-        # Build the request, then get the result
-        req = urllib.request.Request(url)
-        req.add_header('User-Agent',
-                       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                       'Chrome/87.0.4280.88 Safari/537.36')
-        content = urllib.request.urlopen(req)
-        read_content = content.read()
+            # Build the request, then get the result
+            req = urllib.request.Request(url)
+            req.add_header('User-Agent',
+                           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                           'Chrome/87.0.4280.88 Safari/537.36')
+            content = urllib.request.urlopen(req)
+            read_content = content.read()
 
-        # Parse the data from the result
-        soup = BeautifulSoup(read_content, 'html.parser')
-        v_element = soup.find_all("meta", {"property": "og:video"})
+            # Parse the data from the result
+            soup = BeautifulSoup(read_content, 'html.parser')
+            v_element = soup.find_all("meta", {"property": "og:video"})
 
-        return v_element[0].get('content')
+            return v_element[0].get('content')
+    except:
+        return url
 
 
 def set_app_color(color):
@@ -137,4 +140,9 @@ def set_app_color(color):
 def set_app_theme(theme):
     core.caches.general_config['theme'] = theme
     App.get_running_app().theme_cls.theme_style = theme
+
+
+def set_provider(provider: str):
+    core.caches.provider_cache['home screen'].set_provider(provider)  # Set the provider
+    App.get_running_app().root.ids.screen_manager.get_screen('home screen').set_title(provider)  # Set the title
 

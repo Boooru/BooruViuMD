@@ -117,10 +117,10 @@ class SettingsBooruConfigScreen(MDScreen):
         old_b_list = core.caches.user_rules[self.provider]['tags'].split(" ")
         old_b_list.remove(list_item.text)
         core.caches.user_rules[self.provider]['tags'] = " ".join(old_b_list)
-        tags_list = self.ids.tag_list.remove_widget(list_item)
+        self.ids.tag_list.remove_widget(list_item)
 
     def remove_blacklist_tag(self, list_item):
         old_b_list = core.caches.user_rules[self.provider]['blacklist'].split(" ")
         old_b_list.remove(list_item.text)
         core.caches.user_rules[self.provider]['blacklist'] = " ".join(old_b_list)
-        blacklist_list = self.ids.blacklist_list.remove_widget(list_item)
+        self.ids.blacklist_list.remove_widget(list_item)

@@ -1,6 +1,9 @@
 from kivy.app import App
+from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.screen import MDScreen
 
+import assets.strings
+import util.utils
 from core.structures.Entry import Entry
 
 
@@ -16,3 +19,14 @@ def set_big_screen_metadata(caller: MDScreen, meta_data: Entry, also=None):
     if also:
         print("Running also...")
         also()
+
+
+def build_provider_menu(caller):
+    menu_items = []
+    for provider in assets.strings.ALL_PROVIDERS:
+        item = {"text": provider, "viewclass": "OneLineListItem",
+                "on_release": lambda prov=provider: util.utils.set_provider(prov)}
+
+        menu_items.append(item)
+
+    return MDDropdownMenu(caller=caller, items=menu_items, width_mult=2)
