@@ -69,3 +69,21 @@ Reddit_password =  your reddit password
 - Copy and replace the contents of `/BooruViu/patch/kivy` into your Kivy installation folder. `loader.py` should be replacing a file in Kivy's root folder, and `image.py` should be replacing a file in `/kivy/uix`. 
     - This is a temporary measure that wont be necessary once Kivy reaches its next release.
 
+## Usage
+
+Want to see what it is like to use BooruViu? Take a look down bellow!
+
+### Search a Booru
+
+some_gif
+
+### Change Providers
+
+![change_provider_gif](https://i.imgur.com/gMeNjp2.mp4)
+
+### Alter Appearance
+
+![change_appearance_gif](https://i.imgur.com/FQQflT1.mp4)
+
+### Configure Proivider
+
