@@ -15,7 +15,6 @@
         size: (root.size[0], root.size[1])
         size_hint: (None, None)
 
-
         MDToolbar:
             title: "Settings"
             pos_hint: {"top" : 1}
@@ -24,21 +23,17 @@
             left_action_items: [["arrow-left", lambda x: str(set_screen('provider setup screen')) + str(provider_cache['home screen'].read_user_rules())]]
 
         ScrollView:
-            padding_x: 10
-            spacing: 30
+            do_scroll_y: True
+            do_scroll_x: False
 
             MDGridLayout:
                 cols: 1
-                do_scroll_y: True
-                do_scroll_x: False
-                padding: 10
 
                 MDTextField:
                     id: tags_text_box
                     hint_text: "Tags"
                     mode: "rectangle"
                     on_text_validate: root.add_tag(self.text)
-                    padding: 15
 
                 MDList:
                     id: tag_list
@@ -48,7 +43,6 @@
                     hint_text: "Blacklist"
                     mode: "rectangle"
                     on_text_validate: root.add_blacklist_tag(self.text)
-                    padding: 15
 
                 MDList:
                     id: blacklist_list

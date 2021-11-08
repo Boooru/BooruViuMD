@@ -21,6 +21,8 @@ class PixivProvider(ImageProvider):
         self.__tokens = None
         self.__target = None
 
+        self.__modes = ['user', 'newest_followed', 'day', 'week', 'month']
+
     def compose(self) -> str:
         if len(self.get_tags()) > 0:
             self.__target = self.get_tags()[0]
@@ -98,3 +100,12 @@ class PixivProvider(ImageProvider):
     def more(self):
         print("Getting more from pixiv")
         return self.search(reset_page=False, next_page=self.page_number)
+
+    def __search_user(self, reset_page: bool = True, next_page=None):
+        pass
+
+    def __search_followed(self):
+        pass
+
+    def __search_rankings(self):
+        pass
