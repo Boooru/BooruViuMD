@@ -2,13 +2,13 @@
 
 # BooruViu
 
-A user-friendly GUI application meant to stream collections of images from your favorite artists and repositories. Fetch images from Twitter, Pixiv, or even your favorite Booru!
+A user-friendly GUI application meant to stream collections of images from your favorite artists and repositories. Fetch images from Twitter, Pixiv, or even your favorite Booru! Switch seamlessly and easily between your favorite image providers, and configure each of them just the way you want!
 
 ## Features
 
 BooruViu implements a suite of features, some of which may not be available on certain image sources.
 - All
-    - Easily download, go to source, reverse-image-search, or open in browser
+    - Easily download, go to source, reverse-image-search (coming soon), or open in browser
 - Boorus:
     - Full booru syntax support, including tags and sorting.
     - Configure individual booru's to blacklist or require specific tags automatically
@@ -68,4 +68,22 @@ Reddit_password =  your reddit password
 
 - Copy and replace the contents of `/BooruViu/patch/kivy` into your Kivy installation folder. `loader.py` should be replacing a file in Kivy's root folder, and `image.py` should be replacing a file in `/kivy/uix`. 
     - This is a temporary measure that wont be necessary once Kivy reaches its next release.
+
+## Usage
+
+Want to see what it is like to use BooruViu? Take a look down bellow!
+
+### Search a Booru - NSFW
+
+https://user-images.githubusercontent.com/93414885/140667127-bb02a87e-3ce5-4bb4-9a1b-07d7f185ed97.mp4
+
+### Change Providers
+
+https://user-images.githubusercontent.com/93414885/140666468-9dbc30cc-6669-452e-8819-a9d43d5e7c8e.mp4
+
+### Alter Appearance
+
+https://user-images.githubusercontent.com/93414885/140666484-1f74ddb2-2337-4eef-a2c2-6cec313bae44.mp4
+
+### Configure Proivider
 
