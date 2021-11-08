@@ -73,7 +73,7 @@ Reddit_password =  your reddit password
 
 Want to see what it is like to use BooruViu? Take a look down bellow!
 
-### Search a Booru - Mildly NSFW
+### Search a Booru - NSFW
 
 https://user-images.githubusercontent.com/93414885/140667127-bb02a87e-3ce5-4bb4-9a1b-07d7f185ed97.mp4
 
