@@ -20,12 +20,12 @@ BooruViu implements a suite of features, some of which may not be available on c
     - View newest by all (coming soon)
     - View newest by followed (coming soon)
 
-Twitter
+- Twitter
     - View a user's tweets
     - Filter by retweet (coming soon)
     - Filter by hashtag (coming soon)
     
-Reddit
+- Reddit
     - View any subreddit's image posts
     - View your front-page
     - View /r/all
@@ -41,7 +41,7 @@ Reddit
 
     These keys must be supplied to the /tokens/keystore file. I am working on a way to securely deploy the app using *my* keys, but I have yet to figure it out. The good news is, each of the above API keys are very easy to acquire.
     
-- BooruViu relies on an unreleased version of Kivy. Pixiv integration called for some deep changes to the way Kivy handles remote image loading. In order to actually run from source, you'll need to install 
+- BooruViu relies on an unreleased version of Kivy. Pixiv integration called for some deep changes to the way Kivy handles remote image loading. In order to actually run from source, you'll need to install kivy 2.0.0, then copy the contents of the `patch` folder into it. The two files inside the `patch` folder contains the specific updaates necessary to make Kivy function correctly with Pixiv.
 
 ### Setup
 
