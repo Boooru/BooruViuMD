@@ -30,3 +30,14 @@ def build_provider_menu(caller):
         menu_items.append(item)
 
     return MDDropdownMenu(caller=caller, items=menu_items, width_mult=2)
+
+
+def build_provider_menu(caller):
+    menu_items = []
+    for provider in assets.strings.ALL_PROVIDERS:
+        item = {"text": provider, "viewclass": "OneLineListItem",
+                "on_release": lambda prov=provider: util.utils.set_provider(prov)}
+
+        menu_items.append(item)
+
+    return MDDropdownMenu(caller=caller, items=menu_items, width_mult=2)

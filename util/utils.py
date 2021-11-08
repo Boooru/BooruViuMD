@@ -146,3 +146,8 @@ def set_provider(provider: str):
     core.caches.provider_cache['home screen'].set_provider(provider)  # Set the provider
     App.get_running_app().root.ids.screen_manager.get_screen('home screen').set_title(provider)  # Set the title
 
+
+def set_provider(provider: str):
+    core.caches.provider_cache['home screen'].set_provider(provider)  # Set the provider
+    App.get_running_app().root.ids.screen_manager.get_screen('home screen').set_title(provider)  # Set the title
+
