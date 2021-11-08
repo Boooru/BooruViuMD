@@ -25,6 +25,7 @@
 
         ScrollView:
             padding_x: 10
+            spacing: 30
 
             MDGridLayout:
                 cols: 1
@@ -37,6 +38,7 @@
                     hint_text: "Tags"
                     mode: "rectangle"
                     on_text_validate: root.add_tag(self.text)
+                    padding: 15
 
                 MDList:
                     id: tag_list
@@ -46,6 +48,7 @@
                     hint_text: "Blacklist"
                     mode: "rectangle"
                     on_text_validate: root.add_blacklist_tag(self.text)
+                    padding: 15
 
                 MDList:
                     id: blacklist_list
