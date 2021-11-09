@@ -42,10 +42,10 @@ class BooruProvider(ImageProvider):
         if self.get_score_limit() >= 0:
             req = req + "&score:>=" + str(self.get_score_limit())
 
-        if self.sort_mode is not None:
-            if self.sort_mode == self.SCORE_SORT:
+        if self.mode is not None:
+            if self.mode == self.SCORE_SORT:
                 req = req + "&sort:score:desc"
-            elif self.sort_mode == self.RANDOM_SORT:
+            elif self.mode == self.RANDOM_SORT:
                 req = req + "&sort:random"
 
         req = req + "&{t}=".format(t=self.page_tag) + str(self.page_number)
@@ -165,14 +165,14 @@ class DanbooruProvider(BooruProvider):
                 req = req + '&'
             req = req + "score:>=" + str(self.get_score_limit())
 
-        if self.sort_mode is not None:
+        if self.mode is not None:
             if first_append:
                 first_append = False
             else:
                 req = req + '&'
-            if self.sort_mode == self.SCORE_SORT:
+            if self.mode == self.SCORE_SORT:
                 req = req + "sort:score:desc"
-            elif self.sort_mode == self.RANDOM_SORT:
+            elif self.mode == self.RANDOM_SORT:
                 req = req + "sort:random"
 
         if first_append:

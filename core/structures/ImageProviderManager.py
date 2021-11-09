@@ -32,6 +32,11 @@ class ProviderManager:
 
         self.read_user_rules()
 
+        try:
+            App.get_running_app().root.ids.screen_manager.get_screen('home screen').get_modes_menu()
+        except AttributeError:
+            pass
+
     def read_user_rules(self):
         provider_name = util.provider_util.translate(self.__provider)
 
@@ -51,3 +56,7 @@ class ProviderManager:
 
         if "always_safe" in self.__user_rules[provider_name] and self.__user_rules[provider_name]["always_safe"]:
             self.__provider.set_always_safe(bool(self.__user_rules[provider_name]['always_safe']))
+
+    def set_provider_mode(self, mode: str):
+        self.__provider.mode = mode
+        App.get_running_app().root.ids.screen_manager.get_screen('home screen').get_modes_menu()

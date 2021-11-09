@@ -63,7 +63,6 @@ class PixivProvider(ImageProvider):
         #    print("Something went wrong, can't fetch any results!")
         entries = []
         response = None
-        self.mode = 'day_r18'
 
         if self.mode == 'user':
             if not self.__target or self.__target == "":

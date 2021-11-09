@@ -3,6 +3,7 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.screen import MDScreen
 
 import assets.strings
+import core.caches
 import util.utils
 from core.structures.Entry import Entry
 
@@ -32,11 +33,13 @@ def build_provider_menu(caller):
     return MDDropdownMenu(caller=caller, items=menu_items, width_mult=2)
 
 
-def build_provider_menu(caller):
+def build_mode_menu(caller):
     menu_items = []
-    for provider in assets.strings.ALL_PROVIDERS:
-        item = {"text": provider, "viewclass": "OneLineListItem",
-                "on_release": lambda prov=provider: util.utils.set_provider(prov)}
+    for mode in core.caches.provider_cache['home screen'].get_active_provider().modes:
+        item = {"text": mode,
+                "viewclass": "OneLineListItem",
+                "on_release": lambda m=mode: core.caches.provider_cache['home screen'].set_provider_mode(m)
+        }
 
         menu_items.append(item)
 

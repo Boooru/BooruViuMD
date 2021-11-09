@@ -28,8 +28,8 @@ class ImageProvider:
 
         self.__headers = None
 
-        self.sorting_modes = []
-        self.sort_mode = None
+        self.modes = []
+        self.mode = None
 
         self.page_number = 0
 
@@ -92,12 +92,12 @@ class ImageProvider:
 
     def sort_by(self, mode:Union[str, int]):
         if type(mode) == str:
-            if mode in self.sorting_modes:
-                self.sort_mode = mode
+            if mode in self.modes:
+                self.mode = mode
 
         elif type(mode) == int:
-            if mode in range(len(self.sorting_modes)):
-                self.sort_mode = self.sorting_modes[mode]
+            if mode in range(len(self.modes)):
+                self.mode = self.modes[mode]
 
     def set_score_limit(self, limit: int):
         self.__score_limit = limit

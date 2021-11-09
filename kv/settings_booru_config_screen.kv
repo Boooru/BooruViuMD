@@ -33,7 +33,7 @@
                     id: tags_text_box
                     hint_text: "Tags"
                     mode: "rectangle"
-                    on_text_validate: root.add_tag(self.text)
+                    on_text_validate: root.pack_tag(self)
 
                 MDList:
                     id: tag_list
@@ -42,7 +42,7 @@
                     id: blacklist_text_box
                     hint_text: "Blacklist"
                     mode: "rectangle"
-                    on_text_validate: root.add_blacklist_tag(self.text)
+                    on_text_validate: root.pack_blacklist(self)
 
                 MDList:
                     id: blacklist_list

@@ -25,11 +25,17 @@ class HomeScreen(MDScreen):
         super(HomeScreen, self).__init__(**kwargs)
 
         self.menu = None
+        self.modes_menu = None
 
         def get_menu(x):
             x.menu = ui.screens.screen_util.build_provider_menu(self.ids.tool_bar)
 
+        def get_modes_menu(x):
+            print("Initial modes menu set...")
+            x.modes_menu = ui.screens.screen_util.build_mode_menu(self.ids.tool_bar)
+
         Clock.schedule_once(lambda x: get_menu(self))
+        Clock.schedule_once(lambda x: get_modes_menu(self))
 
     def search(self):
         self.ids.image_scroll_view.clear_widgets()
@@ -146,3 +152,7 @@ class HomeScreen(MDScreen):
             self.ids.tool_bar.title = title
         elif isinstance(title, ImageProvider):
             self.ids.tool_bar.title = provider_util.translate(title)
+
+    def get_modes_menu(self):
+        print("Updating modes menu")
+        self.modes_menu = ui.screens.screen_util.build_mode_menu(self.ids.tool_bar)

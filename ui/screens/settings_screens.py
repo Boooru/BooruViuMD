@@ -60,13 +60,13 @@ class SettingsBooruConfigScreen(MDScreen):
         if 'tags' in core.caches.user_rules[self.provider]:
             return core.caches.user_rules[self.provider]['tags']
 
-        return []
+        return ""
 
     def get_blacklist(self):
         if 'blacklist' in core.caches.user_rules[self.provider]:
             return core.caches.user_rules[self.provider]['blacklist']
 
-        return []
+        return ""
 
     def get_limit(self):
         if 'limit' in core.caches.user_rules[self.provider]:
@@ -93,7 +93,7 @@ class SettingsBooruConfigScreen(MDScreen):
         tags_list.clear_widgets()
         blacklist_list.clear_widgets()
 
-        for tag in self.get_tags():
+        for tag in self.get_tags().split(" "):
             tags_list.add_widget(self.__generate_tag_list_item(tag))
 
         for tag in self.get_blacklist().split(" "):
@@ -101,12 +101,19 @@ class SettingsBooruConfigScreen(MDScreen):
             blacklist_list.add_widget(self.__generate_blacklist_item(tag))
 
     def add_tag(self, tag: str):
+        if 'tags' not in core.caches.user_rules[self.provider]:
+            core.caches.user_rules[self.provider]['tags'] = ""
+
         old_tags = core.caches.user_rules[self.provider]['tags']
         core.caches.user_rules[self.provider]['tags'] = old_tags + " " + tag
-        tags_list = self.ids.tag_list
-        tags_list.add_widget(self.__generate_tag_list_item(tag))
+
+        tag_list = self.ids.tag_list
+        tag_list.add_widget(self.__generate_tag_list_item(tag))
 
     def add_blacklist_tag(self, tag: str):
+        if 'blacklist' not in core.caches.user_rules[self.provider]:
+            core.caches.user_rules[self.provider]['blacklist'] = ""
+
         old_tags = core.caches.user_rules[self.provider]['blacklist']
         core.caches.user_rules[self.provider]['blacklist'] = old_tags + " " + tag
 
@@ -124,3 +131,11 @@ class SettingsBooruConfigScreen(MDScreen):
         old_b_list.remove(list_item.text)
         core.caches.user_rules[self.provider]['blacklist'] = " ".join(old_b_list)
         self.ids.blacklist_list.remove_widget(list_item)
+
+    def pack_tag(self, caller):
+        self.add_tag(caller.text)
+        caller.text = ""
+
+    def pack_blacklist(self, caller):
+        self.add_blacklist_tag(caller.text)
+        caller.text = ""
