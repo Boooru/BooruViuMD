@@ -6,6 +6,7 @@ from kivymd.uix.toolbar import MDToolbar
 
 import assets.strings
 import core.caches
+import util.provider_util
 
 
 class SettingsToolbar(MDToolbar):
@@ -26,7 +27,7 @@ class SettingsProviderScreen(MDScreen):
     def set_provider(self, caller: MDSwitch, provider: str):
         if caller.active:  # If the trigger comes from a switch being activated
             self.reset_other_switches(exception=provider)  # Reset the other switches
-            core.caches.provider_cache['home screen'].set_provider(provider)  # Set the provider
+            util.provider_util.set_provider(provider)  # Set the provider
             App.get_running_app().root.ids.screen_manager.get_screen('home screen').set_title(provider)  # Set the title
 
     # Sets switches to false

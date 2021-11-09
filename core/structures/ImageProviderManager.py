@@ -59,4 +59,3 @@ class ProviderManager:
 
     def set_provider_mode(self, mode: str):
         self.__provider.mode = mode
-        App.get_running_app().root.ids.screen_manager.get_screen('home screen').get_modes_menu()

@@ -1,5 +1,9 @@
 from typing import Union, Optional
+
+from kivy.app import App
+
 import assets
+import core.caches
 from core.providers.PixivProvider import PixivProvider
 from core.providers.RedditProvider import RedditProvider
 from core.providers.TwitterProvider import TwitterProvider
@@ -29,3 +33,19 @@ def translate(provider: Union[str, ImageProvider]) -> Optional[Union[str, ImageP
             print("Couldn't translate " + str(provider))
     else:
         print("Couldn't translate " + str(type(provider)))
+
+
+def set_provider(provider: str):
+    core.caches.provider_cache['home screen'].set_provider(provider)  # Set the provider
+    App.get_running_app().root.ids.screen_manager.get_screen('home screen').set_title(provider)  # Set the title
+    App.get_running_app().root.ids.screen_manager.get_screen('home screen').get_modes_menu()
+
+
+def set_mode(mode: str):
+    if mode and mode != "":
+        core.caches.provider_cache['home screen'].set_provider_mode(mode)
+
+        # Do something to update title
+        new_title = translate(core.caches.provider_cache['home screen'].get_active_provider()) + " - " + mode
+        print("Setting title to: " + new_title)
+        App.get_running_app().root.ids.screen_manager.get_screen('home screen').set_title(new_title)

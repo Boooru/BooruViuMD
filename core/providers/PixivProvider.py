@@ -41,26 +41,6 @@ class PixivProvider(ImageProvider):
         if reset_page:
             self.page_number = 0
 
-        # response = None  # Initialize response var
-        # if reset_page and next_page is None:  # Check if we are making a fresh request
-        #    try:
-        #        artist_id = int(self.__target)  # If so, parse the user's ID we are visiting
-        #    except ValueError:
-        #        user_id = utils.get_user_from_url(self.__target)
-        #        if user_id:
-        #            artist_id = user_id
-        #        else:
-        #            return []
-        #    response = api_cache['pixiv-aapi'].user_illusts(user_id=artist_id)  # Get the user's works
-
-        # If we have more than one page worth of works, set the page_number var to the url of the next page
-        #    self.page_number = response.next_url
-        # elif next_page:  # The user wants to get the next page
-        #    response = api_cache['pixiv-aapi'].parse_qs(next_page)  # Get the works from the next page
-        #    response = api_cache['pixiv-aapi'].user_illusts(**response)
-        #    self.page_number = response.next_url  # Update the page_number var to have the url of the next page
-        # else:
-        #    print("Something went wrong, can't fetch any results!")
         entries = []
         response = None
 

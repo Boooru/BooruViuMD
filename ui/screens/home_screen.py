@@ -44,7 +44,6 @@ class HomeScreen(MDScreen):
         self.set_scroller_func()
 
         providers['home screen'].read_user_rules()
-        self.set_title(providers['home screen'].get_active_provider())
 
         composition = providers['home screen'].get_active_provider().compose()
         urls = providers['home screen'].get_active_provider().search()

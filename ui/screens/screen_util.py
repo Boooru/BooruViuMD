@@ -4,6 +4,7 @@ from kivymd.uix.screen import MDScreen
 
 import assets.strings
 import core.caches
+import util.provider_util
 import util.utils
 from core.structures.Entry import Entry
 
@@ -26,7 +27,7 @@ def build_provider_menu(caller):
     menu_items = []
     for provider in assets.strings.ALL_PROVIDERS:
         item = {"text": provider, "viewclass": "OneLineListItem",
-                "on_release": lambda prov=provider: util.utils.set_provider(prov)}
+                "on_release": lambda prov=provider: util.provider_util.set_provider(prov)}
 
         menu_items.append(item)
 
@@ -38,7 +39,7 @@ def build_mode_menu(caller):
     for mode in core.caches.provider_cache['home screen'].get_active_provider().modes:
         item = {"text": mode,
                 "viewclass": "OneLineListItem",
-                "on_release": lambda m=mode: core.caches.provider_cache['home screen'].set_provider_mode(m)
+                "on_release": lambda m=mode: util.provider_util.set_mode(m)
         }
 
         menu_items.append(item)
