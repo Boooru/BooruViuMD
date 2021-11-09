@@ -16,12 +16,13 @@ class BooruProvider(ImageProvider):
         super().__init__()
         self.user_id = ""
         self.user_api = ""
+        self.modes = ['score', 'newest', 'random']
 
     def compose(self) -> str:
         req = self.provider_url
 
         # handle tags
-        if (self.get_tags() and len(self.get_tags()) > 0) or (self.get_blacklisted_tags() and len(self.get_blacklisted_tags()) > 0):
+        if (self.get_tags() and len(self.get_tags()) > 0) or (self.get_blacklisted_tags() and len(self.get_blacklisted_tags()) > 0 or self.mode != 'newest'):
             req = req + "&tags="
             for tag in self.get_tags():
                 req = req + "+" + tag
@@ -30,6 +31,12 @@ class BooruProvider(ImageProvider):
         if self.get_blacklisted_tags() and len(self.get_blacklisted_tags()) > 0:
             for tag in self.get_blacklisted_tags():
                 req = req + "+-" + tag
+
+        if self.mode is not None:
+            if self.mode == 'score':
+                req = req + "+sort:score:desc"
+            elif self.mode == 'random':
+                req = req + "+sort:random"
 
         # handle safety
         if self.is_always_safe():
@@ -42,11 +49,7 @@ class BooruProvider(ImageProvider):
         if self.get_score_limit() >= 0:
             req = req + "&score:>=" + str(self.get_score_limit())
 
-        if self.mode is not None:
-            if self.mode == self.SCORE_SORT:
-                req = req + "&sort:score:desc"
-            elif self.mode == self.RANDOM_SORT:
-                req = req + "&sort:random"
+
 
         req = req + "&{t}=".format(t=self.page_tag) + str(self.page_number)
 
