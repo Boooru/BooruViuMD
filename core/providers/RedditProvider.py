@@ -17,8 +17,8 @@ class RedditProvider(ImageProvider):
         self.internal_index = 0
         self.__reddit_api: praw.Reddit = self.__auth()
         self.__subreddt_generator: Subreddit = None
-        self.sorting_modes = ['top', 'hot', 'new']
-        self.sort_mode = self.sorting_modes[1]
+        self.modes = ['top', 'hot', 'new']
+        self.mode = self.modes[1]
         super().set_limit(10)
 
     def __auth(self):
@@ -59,10 +59,10 @@ class RedditProvider(ImageProvider):
 
         if reset_page:
             limit = self.get_image_limit()
-            if self.sort_mode == 'hot':
+            if self.mode == 'hot':
                 Logger.info("Sorting by hot")
                 self.__subreddt_generator = self.__reddit_api.subreddit(self.compose()).hot()
-            elif self.sort_mode == 'top':
+            elif self.mode == 'top':
                 Logger.info("Sorting by top")
                 self.__subreddt_generator = self.__reddit_api.subreddit(self.compose()).top()
             else:
