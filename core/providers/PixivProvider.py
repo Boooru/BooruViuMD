@@ -21,7 +21,10 @@ class PixivProvider(ImageProvider):
         self.__tokens = None
         self.__target = None
 
-        self.__modes = ['user', 'newest_followed', 'day', 'week', 'month']
+        self.modes_std = ['day', 'week', 'month', 'day_male', 'day_female', 'week_original', 'week_rookie', 'day_manga']
+        self.modes_r18 = ['day_r18', 'day_male_r18', 'day_female_r18', 'week_r18', 'week_r18g']
+        self.modes = (self.modes_std + self.modes_r18 + ['user', 'following'])
+        self.mode = [self.modes[0]]
 
     def compose(self) -> str:
         if len(self.get_tags()) > 0:
@@ -34,14 +37,12 @@ class PixivProvider(ImageProvider):
     def search(self, reset_page: bool = True, next_page=None) -> list[Entry]:
         if not os.path.isdir("./temp"):
             os.mkdir("./temp")
-        if not self.__target or self.__target == "":
-            return []
 
         if reset_page:
             self.page_number = 0
 
-        #response = None  # Initialize response var
-        #if reset_page and next_page is None:  # Check if we are making a fresh request
+        # response = None  # Initialize response var
+        # if reset_page and next_page is None:  # Check if we are making a fresh request
         #    try:
         #        artist_id = int(self.__target)  # If so, parse the user's ID we are visiting
         #    except ValueError:
@@ -52,20 +53,32 @@ class PixivProvider(ImageProvider):
         #            return []
         #    response = api_cache['pixiv-aapi'].user_illusts(user_id=artist_id)  # Get the user's works
 
-            # If we have more than one page worth of works, set the page_number var to the url of the next page
+        # If we have more than one page worth of works, set the page_number var to the url of the next page
         #    self.page_number = response.next_url
-        #elif next_page:  # The user wants to get the next page
+        # elif next_page:  # The user wants to get the next page
         #    response = api_cache['pixiv-aapi'].parse_qs(next_page)  # Get the works from the next page
         #    response = api_cache['pixiv-aapi'].user_illusts(**response)
         #    self.page_number = response.next_url  # Update the page_number var to have the url of the next page
-        #else:
+        # else:
         #    print("Something went wrong, can't fetch any results!")
         entries = []
+        response = None
+        self.mode = 'day_r18'
 
-        response = self.__search_user(reset_page, next_page)
+        if self.mode == 'user':
+            if not self.__target or self.__target == "":
+                return []
+            else:
+                response = self.__search_user(reset_page, next_page)
+
+        elif self.mode == 'following':
+            response = self.__search_followed(reset_page, next_page)
+        else:
+            response = self.__search_rankings(reset_page, next_page)
 
         if not response:
             return entries
+
         for illus in response.illusts:
             if len(illus.meta_pages) > 0:
                 for page in illus.meta_pages:
@@ -103,7 +116,7 @@ class PixivProvider(ImageProvider):
         print("Getting more from pixiv")
         return self.search(reset_page=False, next_page=self.page_number)
 
-    def __search_user(self, reset_page: bool = True, next_page=None):
+    def __search_user(self, reset_page: bool, next_page):
         response = None
         if reset_page and next_page is None:  # Check if we are making a fresh request
             try:
@@ -127,8 +140,36 @@ class PixivProvider(ImageProvider):
 
         return response
 
-    def __search_followed(self):
-        pass
+    def __search_followed(self, reset_page: bool, next_page):
+        response = None
+        if reset_page and next_page is None:  # Check if we are making a fresh request
 
-    def __search_rankings(self):
-        pass
+            response = api_cache['pixiv-aapi'].illust_follow(req_auth=True)  # Get the user's works
+
+            # If we have more than one page worth of works, set the page_number var to the url of the next page
+            self.page_number = response.next_url
+        elif next_page:  # The user wants to get the next page
+            response = api_cache['pixiv-aapi'].parse_qs(next_page)  # Get the works from the next page
+            response = api_cache['pixiv-aapi'].illust_follow(req_auth=True, **response)
+            self.page_number = response.next_url  # Update the page_number var to have the url of the next page
+        else:
+            print("Something went wrong, can't fetch any results!")
+
+        return response
+
+    def __search_rankings(self, reset_page: bool, next_page):
+        response = None
+        if reset_page and next_page is None:  # Check if we are making a fresh request
+
+            response = api_cache['pixiv-aapi'].illust_ranking(self.mode)  # Get the user's works
+
+            # If we have more than one page worth of works, set the page_number var to the url of the next page
+            self.page_number = response.next_url
+        elif next_page:  # The user wants to get the next page
+            response = api_cache['pixiv-aapi'].parse_qs(next_page)  # Get the works from the next page
+            response = api_cache['pixiv-aapi'].illust_ranking(**response)
+            self.page_number = response.next_url  # Update the page_number var to have the url of the next page
+        else:
+            print("Something went wrong, can't fetch any results!")
+
+        return response
