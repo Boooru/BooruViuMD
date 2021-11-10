@@ -22,27 +22,31 @@
 
             left_action_items: [["arrow-left", lambda x: str(set_screen('provider setup screen')) + str(provider_cache['home screen'].read_user_rules())]]
 
-        ScrollView:
-            do_scroll_y: True
-            do_scroll_x: False
+        MDBoxLayout:
+            padding_x: 10
+            spacing: 10
 
-            MDGridLayout:
-                cols: 1
+            ScrollView:
+                do_scroll_y: True
+                do_scroll_x: False
 
-                MDTextField:
-                    id: tags_text_box
-                    hint_text: "Tags"
-                    mode: "rectangle"
-                    on_text_validate: root.pack_tag(self)
+                MDGridLayout:
+                    cols: 1
 
-                MDList:
-                    id: tag_list
+                    MDTextField:
+                        id: tags_text_box
+                        hint_text: "Tags"
+                        mode: "rectangle"
+                        on_text_validate: root.pack_tag(self)
 
-                MDTextField:
-                    id: blacklist_text_box
-                    hint_text: "Blacklist"
-                    mode: "rectangle"
-                    on_text_validate: root.pack_blacklist(self)
+                    MDList:
+                        id: tag_list
 
-                MDList:
-                    id: blacklist_list
+                    MDTextField:
+                        id: blacklist_text_box
+                        hint_text: "Blacklist"
+                        mode: "rectangle"
+                        on_text_validate: root.pack_blacklist(self)
+
+                    MDList:
+                        id: blacklist_list

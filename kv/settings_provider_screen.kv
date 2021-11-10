@@ -50,6 +50,7 @@
 
                 MDIconButton:
                     icon: 'cog'
+                    on_press: open_booru_config_screen("Danbooru")
 
                 MDLabel:
                     text: "Rule34"
@@ -60,6 +61,7 @@
 
                 MDIconButton:
                     icon: 'cog'
+                    on_press: open_booru_config_screen("Rule34")
 
                 MDLabel:
                     text: "Safebooru"
@@ -68,8 +70,10 @@
                     id: safebooru_switch
                     on_active: root.set_provider(self, "Safebooru")
 
+
                 MDIconButton:
                     icon: 'cog'
+                    on_press: open_booru_config_screen("Safebooru")
 
                 MDLabel:
                     text: "Pixiv"

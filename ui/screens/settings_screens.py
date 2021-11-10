@@ -88,6 +88,9 @@ class SettingsBooruConfigScreen(MDScreen):
     def prepare(self, provider: str):
         self.set_target(provider)
 
+        if provider not in core.caches.user_rules:
+            core.caches.user_rules[provider] = {}
+
         tags_list = self.ids.tag_list
         blacklist_list = self.ids.blacklist_list
 
